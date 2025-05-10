@@ -39,20 +39,7 @@ Bootstrap (optional): For frontend styling.
 Jinja2 (optional): For dynamic HTML rendering.
 
 Installation
-1. Clone the Repository
-Clone this repository to your local machine:
 
-bash
-Copy
-Edit
-git clone https://github.com/your-username/recipe-sharer-app.git
-cd recipe-sharer-app
-2. Create and Activate a Virtual Environment
-It’s good practice to use a virtual environment for Python projects. Create and activate it as follows:
-
-bash
-Copy
-Edit
 # On Windows
 python -m venv venv
 .\venv\Scripts\activate
