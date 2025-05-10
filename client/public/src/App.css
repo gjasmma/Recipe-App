@@ -1,0 +1,465 @@
+/* app.css */
+
+/* ==========================================================================
+   1. RESET & NORMALIZE
+   ========================================================================== */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  font-size: 100%; /* Base font size (typically 16px) */
+  line-height: 1.5; /* Default line height */
+  -webkit-font-smoothing: antialiased; /* Smoother fonts on WebKit */
+  -moz-osx-font-smoothing: grayscale; /* Smoother fonts on Firefox */
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: var(--font-family-base);
+  font-size: var(--font-size-base);
+  line-height: var(--line-height-base);
+  color: var(--text-color);
+  background-color: var(--background-color);
+  min-height: 100vh; /* Ensure body takes at least full viewport height */
+  display: flex; /* For centering content or sticky footer patterns */
+  flex-direction: column; /* For sticky footer patterns */
+}
+
+img,
+picture,
+video,
+canvas,
+svg {
+  display: block;
+  max-width: 100%;
+}
+
+input,
+button,
+textarea,
+select {
+  font: inherit; /* Inherit font styles from parent */
+  border: none; /* Remove default borders for easier styling */
+}
+
+button {
+  cursor: pointer;
+  background: none;
+  color: inherit;
+}
+
+a {
+  color: var(--primary-color);
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+  color: var(--primary-color-dark);
+}
+
+ul,
+ol {
+  list-style: none;
+}
+
+/* ==========================================================================
+   2. CSS VARIABLES (CUSTOM PROPERTIES)
+   ========================================================================== */
+
+:root {
+  /* Colors */
+  --primary-color: #007bff;
+  --primary-color-dark: #0056b3;
+  --primary-color-light: #66afe9;
+
+  --secondary-color: #6c757d;
+  --secondary-color-dark: #545b62;
+  --secondary-color-light: #adb5bd;
+
+  --success-color: #28a745;
+  --danger-color: #dc3545;
+  --warning-color: #ffc107;
+  --info-color: #17a2b8;
+
+  --text-color: #333;
+  --text-color-light: #666;
+  --text-color-inverse: #fff;
+
+  --background-color: #f8f9fa;
+  --surface-color: #ffffff; /* For cards, modals, etc. */
+
+  --border-color: #dee2e6;
+  --border-radius-sm: 0.2rem;
+  --border-radius-md: 0.4rem;
+  --border-radius-lg: 0.8rem;
+
+  /* Typography */
+  --font-family-base: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+    Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji",
+    "Segoe UI Symbol";
+  --font-family-heading: var(--font-family-base); /* Can be different */
+
+  --font-size-base: 1rem; /* e.g., 16px */
+  --font-size-sm: 0.875rem; /* e.g., 14px */
+  --font-size-lg: 1.25rem; /* e.g., 20px */
+  --font-size-xl: 1.5rem; /* e.g., 24px */
+
+  --font-weight-light: 300;
+  --font-weight-normal: 400;
+  --font-weight-bold: 700;
+
+  --line-height-base: 1.6;
+  --line-height-heading: 1.3;
+
+  /* Spacing */
+  --spacing-xs: 0.25rem; /* 4px */
+  --spacing-sm: 0.5rem; /* 8px */
+  --spacing-md: 1rem; /* 16px */
+  --spacing-lg: 1.5rem; /* 24px */
+  --spacing-xl: 2rem; /* 32px */
+  --spacing-xxl: 3rem; /* 48px */
+
+  /* Shadows */
+  --box-shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+  --box-shadow-md: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+
+  /* Transitions */
+  --transition-base: all 0.2s ease-in-out;
+
+  /* Z-index (example, adjust as needed) */
+  --z-index-dropdown: 1000;
+  --z-index-modal: 1050;
+  --z-index-tooltip: 1070;
+}
+
+/* ==========================================================================
+   3. TYPOGRAPHY & BODY STYLES
+   ========================================================================== */
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-family-heading);
+  font-weight: var(--font-weight-bold);
+  line-height: var(--line-height-heading);
+  margin-top: var(--spacing-lg);
+  margin-bottom: var(--spacing-md);
+  color: var(--text-color); /* Or a slightly darker shade */
+}
+
+h1 { font-size: 2.5rem; } /* ~40px */
+h2 { font-size: 2rem; }   /* ~32px */
+h3 { font-size: 1.75rem; } /* ~28px */
+h4 { font-size: 1.5rem; }  /* ~24px */
+h5 { font-size: 1.25rem; } /* ~20px */
+h6 { font-size: 1rem; }    /* ~16px */
+
+p {
+  margin-bottom: var(--spacing-md);
+}
+
+strong, b {
+  font-weight: var(--font-weight-bold);
+}
+
+em, i {
+  font-style: italic;
+}
+
+/* ==========================================================================
+   4. LAYOUT HELPERS
+   ========================================================================== */
+
+.container {
+  width: 90%;
+  max-width: 1200px; /* Adjust as needed */
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: var(--spacing-md);
+  padding-right: var(--spacing-md);
+}
+
+/* Example: Main content area to push footer down */
+.main-content {
+  flex-grow: 1; /* Allows main content to expand and push footer */
+}
+
+/* Example: Simple Header and Footer structure (app.html might have this) */
+/*
+.app-header {
+  background-color: var(--surface-color);
+  padding: var(--spacing-md) 0;
+  box-shadow: var(--box-shadow-sm);
+}
+
+.app-footer {
+  background-color: var(--text-color);
+  color: var(--text-color-inverse);
+  padding: var(--spacing-lg) 0;
+  text-align: center;
+  margin-top: auto; / For sticky footer with flex body /
+}
+*/
+
+/* ==========================================================================
+   5. COMPONENT STYLES (EXAMPLES)
+   ========================================================================== */
+
+/* --- Buttons --- */
+.btn {
+  display: inline-block;
+  font-weight: var(--font-weight-normal);
+  text-align: center;
+  vertical-align: middle;
+  user-select: none;
+  background-color: transparent;
+  border: 1px solid transparent;
+  padding: var(--spacing-sm) var(--spacing-md);
+  font-size: var(--font-size-base);
+  line-height: var(--line-height-base);
+  border-radius: var(--border-radius-md);
+  transition: var(--transition-base);
+  text-decoration: none; /* Override default link underline if button is <a> */
+}
+
+.btn:hover {
+  text-decoration: none; /* Ensure no underline on hover for buttons */
+}
+
+.btn:focus, .btn.focus {
+  outline: 0;
+  box-shadow: 0 0 0 0.2rem rgba(var(--primary-color), 0.25); /* Use RGB for opacity */
+}
+
+.btn:disabled, .btn.disabled {
+  opacity: 0.65;
+  cursor: not-allowed;
+}
+
+.btn-primary {
+  color: var(--text-color-inverse);
+  background-color: var(--primary-color);
+  border-color: var(--primary-color);
+}
+.btn-primary:hover {
+  background-color: var(--primary-color-dark);
+  border-color: var(--primary-color-dark);
+  color: var(--text-color-inverse);
+}
+
+.btn-secondary {
+  color: var(--text-color-inverse);
+  background-color: var(--secondary-color);
+  border-color: var(--secondary-color);
+}
+.btn-secondary:hover {
+  background-color: var(--secondary-color-dark);
+  border-color: var(--secondary-color-dark);
+  color: var(--text-color-inverse);
+}
+
+.btn-outline-primary {
+  color: var(--primary-color);
+  border-color: var(--primary-color);
+}
+.btn-outline-primary:hover {
+  color: var(--text-color-inverse);
+  background-color: var(--primary-color);
+  border-color: var(--primary-color);
+}
+
+.btn-lg {
+  padding: var(--spacing-md) var(--spacing-lg);
+  font-size: var(--font-size-lg);
+  border-radius: var(--border-radius-lg);
+}
+
+.btn-sm {
+  padding: var(--spacing-xs) var(--spacing-sm);
+  font-size: var(--font-size-sm);
+  border-radius: var(--border-radius-sm);
+}
+
+/* --- Forms --- */
+.form-group {
+  margin-bottom: var(--spacing-md);
+}
+
+.form-label {
+  display: inline-block;
+  margin-bottom: var(--spacing-xs);
+  font-weight: var(--font-weight-bold);
+}
+
+.form-control {
+  display: block;
+  width: 100%;
+  padding: var(--spacing-sm) var(--spacing-md);
+  font-size: var(--font-size-base);
+  font-weight: var(--font-weight-normal);
+  line-height: var(--line-height-base);
+  color: var(--text-color);
+  background-color: var(--surface-color);
+  background-clip: padding-box;
+  border: 1px solid var(--border-color);
+  border-radius: var(--border-radius-md);
+  transition: border-color var(--transition-base), box-shadow var(--transition-base);
+}
+
+.form-control:focus {
+  color: var(--text-color);
+  background-color: var(--surface-color);
+  border-color: var(--primary-color-light);
+  outline: 0;
+  box-shadow: 0 0 0 0.2rem rgba(var(--primary-color), 0.25); /* Use RGB for opacity */
+}
+
+.form-control::placeholder {
+  color: var(--text-color-light);
+  opacity: 1; /* Firefox */
+}
+
+textarea.form-control {
+  min-height: calc(var(--line-height-base) * 1em + (var(--spacing-sm) * 2) + 2px * 3); /* Approx 3 lines */
+  resize: vertical;
+}
+
+/* --- Cards --- */
+.card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  word-wrap: break-word;
+  background-color: var(--surface-color);
+  background-clip: border-box;
+  border: 1px solid var(--border-color);
+  border-radius: var(--border-radius-lg);
+  margin-bottom: var(--spacing-lg);
+  box-shadow: var(--box-shadow-sm);
+}
+
+.card-header {
+  padding: var(--spacing-md) var(--spacing-lg);
+  margin-bottom: 0;
+  background-color: rgba(0,0,0,.03);
+  border-bottom: 1px solid var(--border-color);
+}
+.card-header:first-child {
+  border-radius: calc(var(--border-radius-lg) - 1px) calc(var(--border-radius-lg) - 1px) 0 0;
+}
+
+.card-body {
+  flex: 1 1 auto;
+  padding: var(--spacing-lg);
+}
+
+.card-footer {
+  padding: var(--spacing-md) var(--spacing-lg);
+  background-color: rgba(0,0,0,.03);
+  border-top: 1px solid var(--border-color);
+}
+.card-footer:last-child {
+  border-radius: 0 0 calc(var(--border-radius-lg) - 1px) calc(var(--border-radius-lg) - 1px);
+}
+
+.card-title {
+  margin-bottom: var(--spacing-sm);
+}
+
+/* ==========================================================================
+   6. UTILITY CLASSES (MINIMAL EXAMPLES)
+   ========================================================================== */
+
+/* --- Spacing (Example: margin-top medium) --- */
+.mt-md { margin-top: var(--spacing-md) !important; }
+.mb-md { margin-bottom: var(--spacing-md) !important; }
+.my-md { margin-top: var(--spacing-md) !important; margin-bottom: var(--spacing-md) !important; }
+/* Add more for padding, different sizes (xs, sm, lg, xl), and sides (l,r,x,y) as needed */
+
+/* --- Text Alignment --- */
+.text-center { text-align: center !important; }
+.text-left   { text-align: left !important; }
+.text-right  { text-align: right !important; }
+.text-justify{ text-align: justify !important; }
+
+/* --- Display --- */
+.d-block   { display: block !important; }
+.d-inline  { display: inline !important; }
+.d-inline-block { display: inline-block !important; }
+.d-flex    { display: flex !important; }
+.d-none    { display: none !important; } /* For hiding elements */
+
+/* --- Visually Hidden (for accessibility) --- */
+.sr-only, .visually-hidden {
+  position: absolute !important;
+  width: 1px !important;
+  height: 1px !important;
+  padding: 0 !important;
+  margin: -1px !important;
+  overflow: hidden !important;
+  clip: rect(0, 0, 0, 0) !important;
+  white-space: nowrap !important;
+  border: 0 !important;
+}
+
+/* ==========================================================================
+   7. RESPONSIVE DESIGN (MEDIA QUERIES)
+   ========================================================================== */
+
+/* Small devices (landscape phones, 576px and up) */
+@media (min-width: 576px) {
+  /* .container { max-width: 540px; } */
+  h1 { font-size: 2.25rem; }
+}
+
+/* Medium devices (tablets, 768px and up) */
+@media (min-width: 768px) {
+  /* .container { max-width: 720px; } */
+  :root {
+    --font-size-base: 1.0625rem; /* Slightly larger base font on tablets, e.g., 17px */
+  }
+  .btn-lg { /* Example: making large buttons even larger on tablets */
+    padding: var(--spacing-lg) var(--spacing-xl);
+    font-size: var(--font-size-xl);
+  }
+}
+
+/* Large devices (desktops, 992px and up) */
+@media (min-width: 992px) {
+  /* .container { max-width: 960px; } */
+  :root {
+    --font-size-base: 1.125rem; /* e.g., 18px for desktops */
+  }
+}
+
+/* Extra large devices (large desktops, 1200px and up) */
+@media (min-width: 1200px) {
+  /* .container { max-width: 1140px; } */
+  /* Default .container max-width is 1200px, so this might not be needed unless you want it smaller */
+}
+
+/*
+  Consider print styles for a better printing experience
+@media print {
+  body {
+    background-color: #fff;
+    color: #000;
+  }
+  .btn, .app-header, .app-footer {
+    display: none !important; / Hide non-essential elements /
+  }
+  a {
+    text-decoration: underline;
+    color: #000;
+  }
+  a[href^="http"]:after {
+    content: " (" attr(href) ")"; / Show full URLs for external links /
+  }
+}
+*/
